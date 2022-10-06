@@ -3,7 +3,13 @@
 `pip install -r requirements
 `
 # Run app
+`uvicorn main:app --reload`
 
-Option to reload when change codes <br>
+`--reload` is the option to reload the app automatically when change codes. You can drop reload option if you don't need it.<br>
 
-uvicorn main:app --reload
+
+# Run crawler
+
+You need to download chrome driver to run crawler. Download link: https://chromedriver.chromium.org/home <br>
+
+`python selenium_crawler.py --url <website_url> --driver <chrome_driver_path>`
