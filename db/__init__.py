@@ -16,3 +16,5 @@ with sqlite3.connect(DB_PATH) as conn:
                      'dob TEXT NOT NULL, '
                      'hometown TEXT NOT NULL, '
                      'gpa REAL)')
+        conn.execute('CREATE UNIQUE INDEX sid_index ON student (sid)')
+        conn.commit()
