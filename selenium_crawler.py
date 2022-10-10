@@ -6,7 +6,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--driver", type=str, default='./chromedriver', help="Google Chrome driver path")
+parser.add_argument("--driver", type=str,
+                    default='./chromedriver', help="Google Chrome driver path")
 parser.add_argument("--url", type=str, required=True, help='Website URL')
 args = parser.parse_args()
 
