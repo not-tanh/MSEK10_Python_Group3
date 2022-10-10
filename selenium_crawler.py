@@ -1,7 +1,5 @@
 import csv
 import argparse
-import time
-import traceback
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -16,6 +14,8 @@ args = parser.parse_args()
 chrome_options = Options()
 driver = webdriver.Chrome(f'./{args.driver}', chrome_options=chrome_options)
 driver.get(args.url)
+
+# TODO: Handle next button in pagination
 
 content = driver.find_element(by=By.TAG_NAME, value='tbody')
 student_records = content.find_elements(by=By.TAG_NAME, value='tr')
