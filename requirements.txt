@@ -2,3 +2,4 @@ fastapi
 pydantic
 selenium
 uvicorn[standard]
+fastapi_pagination

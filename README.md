@@ -1,12 +1,12 @@
 # Installation
 
-`pip install -r requirements
-`
+`pip install -r requirements `
+
 # Run app
+
 `uvicorn main:app --reload`
 
 `--reload` is the option to reload the app automatically when change codes. You can drop reload option if you don't need it.<br>
-
 
 # Run crawler
 
