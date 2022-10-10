@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse
 
 router = APIRouter()
 
 
 @router.get('/')
 def index():
-    return RedirectResponse('/docs')
+    return FileResponse('./src/page/index.html')
