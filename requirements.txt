@@ -4,3 +4,4 @@ selenium
 uvicorn[standard]
 fastapi_pagination
 email-validator
+Faker

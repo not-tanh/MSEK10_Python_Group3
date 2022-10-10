@@ -1,5 +1,5 @@
 import collections
-import json
+# import json
 import sqlite3
 
 from config import DB_PATH
@@ -21,5 +21,5 @@ def getListStudent():
             d['hometown'] = row[6]
             d['gpa'] = row[7]
             objects_list.append(d)
-        res = json.dumps(objects_list)
+        # res = json.dumps(objects_list)
         return objects_list

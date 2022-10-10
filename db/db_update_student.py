@@ -1,5 +1,5 @@
-import collections
-import json
+# import collections
+# import json
 import sqlite3
 
 from config import DB_PATH
@@ -16,6 +16,6 @@ def updateStudent(s: Student):
         )
         conn.commit()
         if conn:
-            return 'Updated sucessfully'
+            return 'Updated successfully'
         else:
             return 'Updated fail'
