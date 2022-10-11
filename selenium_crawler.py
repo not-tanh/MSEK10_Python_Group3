@@ -15,15 +15,22 @@ chrome_options = Options()
 driver = webdriver.Chrome(f'./{args.driver}', chrome_options=chrome_options)
 driver.get(args.url)
 
-# TODO: Handle next button in pagination
-
-content = driver.find_element(by=By.TAG_NAME, value='tbody')
-student_records = content.find_elements(by=By.TAG_NAME, value='tr')
 data = []
 
-for record in student_records:
-    attributes = record.find_elements(by=By.TAG_NAME, value='td')[:-1]
-    data.append([e.text for e in attributes])
+while True:
+    content = driver.find_element(by=By.TAG_NAME, value='tbody')
+    student_records = content.find_elements(by=By.TAG_NAME, value='tr')
+
+    for record in student_records:
+        attributes = record.find_elements(by=By.TAG_NAME, value='td')[:-1]
+        data.append([e.text for e in attributes])
+
+    # go to next page
+    next_button = driver.find_element(by=By.ID, value='next')
+    if next_button and next_button.is_enabled():
+        next_button.click()
+    else:
+        break
 
 with open('output.csv', 'w') as f:
     writer = csv.writer(f)
