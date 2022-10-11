@@ -114,7 +114,11 @@
         }
     </style>
     <script>
+        const baseUrl = 'http://127.0.0.1:8000/'
+
         $(document).ready(function () {
+            let mode = 'create'
+
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
             // Append table with add row form on add new button click
@@ -154,6 +158,7 @@
                     $(this).parents("tr").find(".add, .edit").toggle();
                     $(".add-new").removeAttr("disabled");
                 }
+                saveAPI(getBody(input))
             });
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
@@ -168,6 +173,64 @@
                 $(this).parents("tr").remove();
                 $(".add-new").removeAttr("disabled");
             });
+
+            const getBody = (inputRow) => {
+                const name = inputRow[1].value.trim()
+                const [firstName, lastName] = getName(name)
+                return {
+                    sid: inputRow[0].value.trim(),
+                    last_name: lastName,
+                    first_name: firstName,
+                    email: inputRow[2].value.trim(),
+                    dob: inputRow[3].value.trim(),
+                    hometown: inputRow[4].value.trim(),
+                    gpa: inputRow[5].value.trim()
+                }
+            }
+
+            const getName = (name) => {
+                // find first space in name
+                name = name.trim()
+                const index = name.indexOf(" ")
+                return [name.slice(0, index), name.slice(index)]
+            }
+
+            const saveAPI = async (data) => {
+                let method = 'post'
+                mode === 'create'? method = 'post' : method = 'put'
+                await $.ajax({
+                    url: `${baseUrl}student`,
+                    type: method,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: await getData()
+                })
+                await getData()
+            }
+
+            const getData = async () => {
+                let htmlBody = ''
+                await $.get(`${baseUrl}get_student`, function( data ) {
+                    JSON.parse(JSON.stringify(data)).forEach(e => {
+                        htmlBody += `<tr>
+                            <td style="width: 100px">${e.sid}</td>
+                            <td style="width: 150px">${e.last_name} ${e.first_name}</td>
+                            <td style="width: 150px">${e.email}</td>
+                            <td style="width: 100px">${e.dob}</td>
+                            <td style="width: 100px">${e.hometown}</td>
+                            <td style="width: 100px">${e.gpa}</td>
+                            <td>
+                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>`
+                    })
+                })
+                $('#table-body').html(htmlBody)
+            }
+            getData()
         });
     </script>
 </head>
@@ -186,15 +249,16 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Mail</th>
-                    <th>Date of birth</th>
-                    <th>Home town</th>
-                    <th>GPA</th>
+                    <th style="width: 100px">ID</th>
+                    <th style="width: 150px">Name</th>
+                    <th style="width: 150px">Mail</th>
+                    <th style="width: 100px">Date of birth</th>
+                    <th style="width: 100px">Home town</th>
+                    <th style="width: 100px">GPA</th>
+                    <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                 <tr>
                     <td>MSE001</td>
                     <td>Nguyen Tuan Anh</td>

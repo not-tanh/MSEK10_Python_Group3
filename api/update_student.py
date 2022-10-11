@@ -4,17 +4,16 @@ import traceback
 from fastapi import APIRouter, HTTPException
 
 from student import Student
-from db import db_update_student as DBUpdateStudent
+from db import db_update_student
 
 router = APIRouter()
 
 
-@router.put('/updatestudent')
-def updateStudent(student: Student):
+@router.put('/student')
+def update_student(student: Student):
     try:
-        result = DBUpdateStudent.updateStudent(student)
-
-        return result
+        db_update_student.updateStudent(student)
+        return {'msg': 'Updated student successfully.'}
     except sqlite3.IntegrityError:
         raise HTTPException(status_code=400, detail='Student ID is not valid')
     except:

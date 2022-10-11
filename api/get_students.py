@@ -10,8 +10,8 @@ from db import db_get_list_student as DBGetListStudent
 router = APIRouter()
 
 
-@router.get('/students', response_model=Page[Student])
-async def get_users():
+@router.get('/student', response_model=Page[Student])
+async def get_students():
     students = DBGetListStudent.getListStudent()
     return paginate(students)
 

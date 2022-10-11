@@ -2,19 +2,18 @@ import sqlite3
 import traceback
 
 from fastapi import APIRouter, HTTPException
-from fastapi_pagination import Page, add_pagination, paginate
 
-from student import Student
-from db import db_get_list_student as DBGetListStudent
+from student import StudentBase
+from db import db_delete_student
 
 router = APIRouter()
 
 
-@router.get('/getliststudent')
-def getListStudent():
+@router.delete('/student')
+def delete_student(student_data: StudentBase):
     try:
-        listStudent = DBGetListStudent.getListStudent()
-        return listStudent
+        db_delete_student.deleteStudent(student_data)
+        return {'msg': 'Deleted student successfully.'}
     except sqlite3.IntegrityError:
         raise HTTPException(status_code=400, detail='Student ID is not valid')
     except:
