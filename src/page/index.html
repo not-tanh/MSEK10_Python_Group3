@@ -126,6 +126,7 @@
             var actions = $("table td:last-child").html();
             // Append table with add row form on add new button click
             $(".add-new").click(function () {
+                mode = 'create'
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:last-child").index();
                 var row = '<tr>' +
@@ -165,6 +166,7 @@
             });
             // Edit row on edit button click
             $(document).on("click", ".edit", function () {
+                mode = 'update'
                 $(this).parents("tr").find("td:not(:last-child)").each(function () {
                     $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
                 });
