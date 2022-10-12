@@ -1,18 +1,21 @@
-import sqlite3
 import traceback
 
 from fastapi import APIRouter, HTTPException
-from fastapi_pagination import Page, add_pagination, paginate
+from fastapi_pagination import Page, paginate
 
 from student import Student
-from db import db_get_list_student as DBGetListStudent
+from db import db_get_list_student
 
 router = APIRouter()
 
 
 @router.get('/student', response_model=Page[Student])
 async def get_students():
-    students = DBGetListStudent.getListStudent()
-    return paginate(students)
+    try:
+        students = db_get_list_student.getListStudent()
+        return paginate(students)
+    except:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail='Internal server error')
 
 
