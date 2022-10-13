@@ -248,11 +248,11 @@
                         alert(result.msg)
                     }
                     })
-                    await getData()
                 } catch (e) {
-                    alert(e.statusText)
+                    alert(e.responseJSON.detail[0].msg)
                     console.log(e)
                 }
+                await getData()
             }
 
             const deleteAPI = async (id) => {
@@ -265,12 +265,11 @@
                         alert(result.msg)
                     }
                     })
-                    await getData()
                 } catch (e) {
-                    alert(e.statusText)
+                    alert(e.responseJSON.detail[0].msg)
                     console.log(e)
                 }
-
+                await getData()
             }
 
             const getData = async () => {
