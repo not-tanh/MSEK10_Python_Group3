@@ -178,19 +178,25 @@
             $(document).on("click", ".delete", function () {
                 $(this).parents("tr").remove();
                 $(".add-new").removeAttr("disabled");
+                const currentRow = $(this).closest("tr");
+                const col1 = currentRow.find("td:eq(0)").text();
+                deleteAPI(col1)
             });
 
-            let pageLength = 0
+            let numberPage = 0
             $('#next').click(() => {
-                if (page <= pageLength - 1){
+                if (page <= numberPage){
                     page += 1
                     getData()
                 }
-                if (page === pageLength - 1) {
+                if (page === numberPage) {
                     $('#next').hide();
                     $('#back').show();
                 }
-                else $('#next').show(); $('#back').show();
+                else {
+                    $('#next').show();
+                    $('#back').show();
+                }
             })
 
             $('#back').click(() => {
@@ -199,7 +205,11 @@
                     $('#back').hide();
                     $('#next').show();
                 }
-                else page -= 1; $('#next').show(); $('#back').show();
+                else {
+                    page -= 1;
+                    $('#next').show();
+                    $('#back').show();
+                }
                 getData()
             })
 
@@ -227,21 +237,47 @@
             const saveAPI = async (data) => {
                 let method = 'post'
                 mode === 'create'? method = 'post' : method = 'put'
-                await $.ajax({
+                try {
+                    await $.ajax({
                     url: `${baseUrl}student`,
                     type: method,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
-                    success: await getData()
-                })
-                await getData()
+                    success: function(result) {
+                        alert(result.msg)
+                    }
+                    })
+                    await getData()
+                } catch (e) {
+                    alert(e.statusText)
+                    console.log(e)
+                }
+            }
+
+            const deleteAPI = async (id) => {
+                try {
+                    await $.ajax({
+                    url: `${baseUrl}student`,
+                    type: 'DELETE',
+                    dataType: "json",
+                    data: id,
+                    success: function(result) {
+                        alert(result.msg)
+                    }
+                    })
+                    await getData()
+                } catch (e) {
+                    alert(e.statusText)
+                    console.log(e)
+                }
+
             }
 
             const getData = async () => {
                 let htmlBody = ''
                 await $.get(`${baseUrl}student?page=${page}&size=5`, function( data ) {
-                    pageLength = data.items.length
+                    numberPage = data.total % data.size
                     JSON.parse(JSON.stringify(data)).items.forEach(e => {
                         htmlBody += `<tr>
                             <td style="width: 100px">${e.sid}</td>
@@ -253,10 +289,12 @@
                             <td>
                                 <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                                 <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                <a class="delete" title="Delete" data-toggle="tooltip" ><i class="material-icons">&#xE872;</i></a>
                             </td>
                         </tr>`
                     })
+                    numberPage = (data.total / data.size)
+                    numberPage = Math.ceil(numberPage)
                 })
                 $('#table-body').html(htmlBody)
             }
