@@ -17,5 +17,3 @@ async def get_students():
     except:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail='Internal server error')
-
-

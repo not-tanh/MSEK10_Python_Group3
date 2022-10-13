@@ -1,6 +1,8 @@
 import csv
 import argparse
+import time
 
+import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -27,9 +29,11 @@ while True:
 
     # go to next page
     next_button = driver.find_element(by=By.ID, value='next')
-    if next_button and next_button.is_enabled():
+    try:
         next_button.click()
-    else:
+        # wait for data to load
+        time.sleep(1)
+    except selenium.common.exceptions.ElementNotInteractableException:
         break
 
 with open('output.csv', 'w') as f:
