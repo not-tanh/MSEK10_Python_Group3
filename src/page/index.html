@@ -208,6 +208,7 @@
 
             let numberPage = 0
             $('#next').click(() => {
+                console.log(111, numberPage)
                 if (page <= numberPage){
                     page += 1
                     getData()
@@ -225,8 +226,6 @@
             $('#back').click(() => {
                 if (page === 1) {
                     page = 1
-                    $('#back').hide();
-                    $('#next').show();
                 }
                 else {
                     page -= 1;
@@ -316,6 +315,18 @@
                     })
                     numberPage = (data.total / data.size)
                     numberPage = Math.ceil(numberPage)
+                    if (page === numberPage && numberPage >= 1) {
+                        $('#next').hide();
+                        $('#back').show();
+                    }
+                    if (page === 1 && numberPage >= 1) {
+                        $('#back').hide();
+                        $('#next').show();
+                    }
+                    if (numberPage === 1) {
+                        $('#back').hide();
+                        $('#next').hide();
+                    }
                 })
                 $('#table-body').html(htmlBody)
             }
