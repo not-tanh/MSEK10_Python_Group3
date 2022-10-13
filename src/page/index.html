@@ -58,6 +58,7 @@
 
         table.table tr th, table.table tr td {
             border-color: #e9e9e9;
+            overflow-wrap: break-word;
         }
 
         table.table th i {
@@ -179,14 +180,26 @@
                 $(".add-new").removeAttr("disabled");
             });
 
+            let pageLength = 0
             $('#next').click(() => {
-                page += 1
-                getData()
+                if (page <= pageLength - 1){
+                    page += 1
+                    getData()
+                }
+                if (page === pageLength - 1) {
+                    $('#next').hide();
+                    $('#back').show();
+                }
+                else $('#next').show(); $('#back').show();
             })
 
             $('#back').click(() => {
-                if (page === 1) page = 1
-                else page -= 1
+                if (page === 1) {
+                    page = 1
+                    $('#back').hide();
+                    $('#next').show();
+                }
+                else page -= 1; $('#next').show(); $('#back').show();
                 getData()
             })
 
@@ -228,6 +241,7 @@
             const getData = async () => {
                 let htmlBody = ''
                 await $.get(`${baseUrl}student?page=${page}&size=5`, function( data ) {
+                    pageLength = data.items.length
                     JSON.parse(JSON.stringify(data)).items.forEach(e => {
                         htmlBody += `<tr>
                             <td style="width: 100px">${e.sid}</td>
@@ -274,7 +288,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody id="table-body">
+                <tbody id="table-body" class="over-flow">
                 <tr>
                     <td>MSE001</td>
                     <td>Nguyen Tuan Anh</td>
