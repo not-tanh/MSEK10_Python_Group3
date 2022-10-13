@@ -10,9 +10,9 @@ router = APIRouter()
 
 
 @router.delete('/student')
-def delete_student(student_data: StudentBase):
+def delete_student(sid):
     try:
-        db_delete_student.deleteStudent(student_data)
+        db_delete_student.deleteStudent(sid)
         return {'msg': 'Deleted student successfully.'}
     except sqlite3.IntegrityError:
         raise HTTPException(status_code=400, detail='Student ID is not valid')

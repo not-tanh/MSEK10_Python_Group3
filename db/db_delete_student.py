@@ -5,9 +5,9 @@ from config import DB_PATH
 from student import StudentBase
 
 
-def deleteStudent(student_base: StudentBase):
+def deleteStudent(sid):
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute(
-            'DELETE FROM student WHERE sid = ?', (student_base.sid,)
+            'DELETE FROM student WHERE sid = ?', (sid,)
         )
         conn.commit()

@@ -258,10 +258,9 @@
             const deleteAPI = async (id) => {
                 try {
                     await $.ajax({
-                    url: `${baseUrl}student`,
+                    url: `${baseUrl}student?sid=${id}`,
                     type: 'DELETE',
                     dataType: "json",
-                    data: id,
                     success: function(result) {
                         alert(result.msg)
                     }
