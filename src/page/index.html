@@ -115,6 +115,27 @@
         table.table td .add {
             display: none;
         }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          padding: 8px 16px;
+        }
+
+        a:hover {
+          background-color: #ddd;
+          color: black;
+        }
+
+        .previous {
+          background-color: #f1f1f1;
+          color: black;
+        }
+
+        .next {
+          background-color: #04AA6D;
+          color: white;
+        }
     </style>
     <script>
         const baseUrl = 'http://127.0.0.1:8000/'
@@ -285,9 +306,9 @@
                             <td style="width: 100px">${e.hometown}</td>
                             <td style="width: 100px">${e.gpa}</td>
                             <td>
-                                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                <a class="delete" title="Delete" data-toggle="tooltip" ><i class="material-icons">&#xE872;</i></a>
+                                <a class="add" title="Add"><i class="material-icons">&#xE03B;</i></a>
+                                <a class="edit" title="Edit"><i class="material-icons">&#xE254;</i><span style="font-size: 12px">Edit</span></a>
+                                <a class="delete" title="Delete" ><i class="material-icons">&#xE872;</i><span style="font-size: 12px">Delete</span</a>
                             </td>
                         </tr>`
                     })
@@ -309,6 +330,10 @@
                     <div class="col-sm-8"><h2>Student <b>Information</b></h2></div>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                    <div class="col-sm-4" style="padding-top: 10px">
+                        <a href="#back" class="previous" id="back">&laquo; Previous</a>
+                        <a href="#next" class="next" id="next">Next &raquo;</a>
                     </div>
                 </div>
             </div>
@@ -333,16 +358,14 @@
                     <td>Ha Noi</td>
                     <td>4.0</td>
                     <td>
-                        <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                        <a class="delete" title="Delete" data-toggle="tooltip"><i
+                        <a class="add" title="Add"><i class="material-icons">&#xE03B;</i></a>
+                        <a class="edit" title="Edit"><i class="material-icons">&#xE254;</i></a>
+                        <a class="delete" title="Delete"><i
                                 class="material-icons">&#xE872;</i></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <i style="font-size:24px; cursor: pointer" class="fa" id="back">&#xf104;</i>
-            <i style="font-size:24px; margin-left: 20px; cursor: pointer" class="fa" id="next">&#xf105;</i>
         </div>
     </div>
 </div>
