@@ -14,7 +14,7 @@ try:
         while True:
             try:
                 student = Student(
-                    **{'sid': f'MSE{random.randint(1, 10000)}', 'first_name': fake.first_name(), 'last_name': fake.last_name(),
+                    **{'sid': f'MSE{random.randint(1, 1000000)}', 'first_name': fake.first_name(), 'last_name': fake.last_name(),
                        'email': fake.email(), 'dob': fake.date(), 'hometown': fake.city(),
                        'gpa': round(random.uniform(2, 4), 2)}
                 )

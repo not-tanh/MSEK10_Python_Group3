@@ -155,7 +155,8 @@
                 var index = $("table tbody tr:last-child").index();
                 var row = '<tr>' +
                     '<td><input type="text" class="form-control" name="id" id="id"></td>' +
-                    '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+                    '<td><input type="text" class="form-control" name="name" id="firstname"></td>' +
+                    '<td><input type="text" class="form-control" name="name" id="lastname"></td>' +
                     '<td><input type="text" class="form-control" name="mail" id="mail"</td>' +
                     '<td><input type="text" class="form-control" name="dob" id="dob"></td>' +
                     '<td><input type="text" class="form-control" name="hometown" id="hometown"></td>' +
@@ -235,16 +236,14 @@
             })
 
             const getBody = (inputRow) => {
-                const name = inputRow[1].value.trim()
-                const [firstName, lastName] = getName(name)
                 return {
                     sid: inputRow[0].value.trim(),
-                    last_name: lastName,
-                    first_name: firstName,
-                    email: inputRow[2].value.trim(),
-                    dob: inputRow[3].value.trim(),
-                    hometown: inputRow[4].value.trim(),
-                    gpa: inputRow[5].value.trim()
+                    last_name: inputRow[2].value.trim(),
+                    first_name: inputRow[1].value.trim(),
+                    email: inputRow[3].value.trim(),
+                    dob: inputRow[4].value.trim(),
+                    hometown: inputRow[5].value.trim(),
+                    gpa: inputRow[6].value.trim()
                 }
             }
 
@@ -300,7 +299,8 @@
                     JSON.parse(JSON.stringify(data)).items.forEach(e => {
                         htmlBody += `<tr>
                             <td style="width: 100px">${e.sid}</td>
-                            <td style="width: 150px">${e.last_name} ${e.first_name}</td>
+                            <td style="width: 150px">${e.first_name}</td>
+                            <td style="width: 150px">${e.last_name}</td>
                             <td style="width: 150px">${e.email}</td>
                             <td style="width: 100px">${e.dob}</td>
                             <td style="width: 100px">${e.hometown}</td>
@@ -353,10 +353,11 @@
                 <thead>
                 <tr>
                     <th style="width: 100px">ID</th>
-                    <th style="width: 150px">Name</th>
+                    <th style="width: 150px">First name</th>
+                    <th style="width: 150px">Last name</th>
                     <th style="width: 150px">Mail</th>
                     <th style="width: 100px">Date of birth</th>
-                    <th style="width: 100px">Home town</th>
+                    <th style="width: 100px">Hometown</th>
                     <th style="width: 100px">GPA</th>
                     <th></th>
                 </tr>
